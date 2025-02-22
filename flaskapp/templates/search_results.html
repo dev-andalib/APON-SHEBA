@@ -1,0 +1,88 @@
+{% extends "layout.html" %} 
+
+{% block search %}
+<form action="{{ url_for('search_result') }}" method="GET" class="form-inline my-2 my-lg-0 w-100">
+  <div class="form-group w-100 mb-2">
+    <label for="query" class="sr-only">Search:</label>
+    <input
+      type="text"
+      id="query"
+      name="query"
+      class="form-control w-100"
+      placeholder="Enter service name"
+    />
+  </div>
+
+  <div class="form-row w-100 mb-2">
+    <div class="form-group col-md-6">
+      <label for="min_price" class="sr-only">Min Price:</label>
+      <input
+        type="number"
+        id="min_price"
+        name="min_price"
+        class="form-control"
+        placeholder="Min Price"
+        step="0.01"
+      />
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="max_price" class="sr-only">Max Price:</label>
+      <input
+        type="number"
+        id="max_price"
+        name="max_price"
+        class="form-control"
+        placeholder="Max Price"
+        step="0.01"
+      />
+    </div>
+  </div>
+
+  <div class="form-row w-100 mb-2">
+    <div class="form-group col-md-12">
+      <label for="rating" class="sr-only">Minimum Rating:</label>
+      <select id="rating" name="rating" class="form-control w-100">
+        <option value="">Select Rating</option>
+        <option value="0">0+</option>
+        <option value="1">1+</option>
+        <option value="2">2+</option>
+        <option value="3">3+</option>
+        <option value="4">4+</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+{% endblock %} 
+
+{% block result %}
+<h1>Search Results</h1>
+{% if result %}
+<ul>
+    {% for result in result %}
+    <li>
+      <article class="media content-section">
+        <div class="media-body">
+          <h2>
+            <a
+              class="article-title"
+              href="{{ url_for('servicedetails', service_id = result.id) }}"
+              >{{ result.title }}</a
+            >
+          </h2>
+          <p class="article-content">{{ result.description }}</p>
+          <p><strong>Category:</strong> {{ result.category.name }}</p>
+          <p><strong>Ratings:</strong> {{ result.ratings }} / 5</p>
+          <p><strong>Price:</strong> ${{ result.ser_price }}</p>
+        </div>
+      </article>
+    </li>
+    {% endfor %} 
+</ul>
+{% else %}
+<h2>No results found</h2>
+{% endif %}
+{% endblock result %}

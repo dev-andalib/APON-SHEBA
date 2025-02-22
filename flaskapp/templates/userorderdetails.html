@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>{{ details.service_title }}</h2>
+        <p><strong>Price:</strong> ${{ details.price }}</p>
+        <p><strong>Date:</strong> {{ details.order_datetime.strftime('%Y-%m-%d')}}</p>
+        <p><strong>Status:</strong> {{ details.status.value }}</p>
+        <a href="{{ url_for('alluserorders') }}" class="btn btn-secondary">Back to Orders</a>
+        <!-- New Complain Button -->
+        <button id="complainBtn" class="btn btn-danger">Complain</button>
+        <!-- Complain Form -->
+        <form id="complainForm" action="{{ url_for('submit_complaint', order_id=details.id) }}" method="POST" style="display:none;">
+            <div class="form-group">
+                <label for="complaint">Your Complaint:</label>
+                <textarea class="form-control" id="complaint" name="complaint" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Complaint</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('complainBtn').addEventListener('click', function() {
+            document.getElementById('complainForm').style.display = 'block';
+        });
+    </script>
+{% endblock content %}

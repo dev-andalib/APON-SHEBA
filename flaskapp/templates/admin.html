@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block search %}
+<!-- Admin-specific search or filters can be added here if needed -->
+{% endblock search %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<!-- Listing unresolved complaints -->
+<h2>Unresolved Complaints</h2>
+{% for complaint in unresolved_complaints %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ complaint.user.username }}</a>
+      <small class="text-muted">{{ complaint.date_posted }}</small>
+    </div>
+    <p class="article-content">{{ complaint.message }}</p>
+    <a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn btn-primary">View Details</a>
+  </div>
+</article>
+{% endfor %}
+
+<!-- Listing resolved complaints -->
+<h2>Resolved Complaints</h2>
+{% for complaint in resolved_complaints %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ complaint.user.username }}</a>
+      <small class="text-muted">{{ complaint.date_posted }}</small>
+    </div>
+    <p class="article-content">{{ complaint.message }}</p>
+    <a href="{{ url_for('view_complaint', complaint_id=complaint.id) }}" class="btn btn-primary">View Details</a>
+  </div>
+</article>
+{% endfor %}
+
+<!-- Example of listing users -->
+<h2>Users</h2>
+{% for user in users %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ user.username }}</a>
+      <small class="text-muted">{{ user.email }}</small>
+    </div>
+    <p class="article-content">Admin: {{ user.is_admin }}</p>
+    {% if not user.is_admin %}
+    <form method="POST" action="{{ url_for('make_admin', user_id=user.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-success btn-sm">Make Admin</button>
+    </form>
+    {% endif %}
+    <form method="POST" action="{{ url_for('delete_user', user_id=user.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger btn-sm">Delete User</button>
+    </form>
+  </div>
+</article>
+{% endfor %}
+
+<!-- Example of listing services -->
+<h2>Services</h2>
+{% for service in services %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ service.provider.user.username }}</a>
+      <small class="text-muted">{{ service.date_posted }}</small>
+    </div>
+    <h2>
+      <a
+        class="article-title"
+        href="{{ url_for('servicedetails', service_id = service.id) }}"
+        >{{ service.title }}</a
+      >
+    </h2>
+    <p class="article-content">{{ service.description }}</p>
+    <form method="POST" action="{{ url_for('delete_service', service_id=service.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger btn-sm">Delete Service</button>
+    </form>
+  </div>
+</article>
+{% endfor %}
+
+<!-- Unverified Service Providers -->
+<h2>Unverified Service Providers</h2>
+{% for provider in unverified_providers %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ provider.user.username }}</a>
+      <small class="text-muted">{{ provider.nid }}</small>
+    </div>
+    <p class="article-content">{{ provider.bio }}</p>
+    <form method="POST" action="{{ url_for('approve_provider', provider_id=provider.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+    </form>
+    <form method="POST" action="{{ url_for('reject_provider', provider_id=provider.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+    </form>
+  </div>
+</article>
+{% endfor %}
+
+<!-- Category Management -->
+<h2>Manage Categories</h2>
+<form method="POST" action="{{ url_for('add_category') }}">
+    <div class="form-group">
+        <label for="category_name">New Category Name:</label>
+        <input type="text" class="form-control" id="category_name" name="category_name" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</form>
+
+<h3>Existing Categories</h3>
+<ul style="display: flex; flex-wrap: wrap; gap: 10px;">
+    {% for category in categories %}
+        <li style="list-style: none;">
+            {{ category.name }}
+            <form method="POST" action="{{ url_for('delete_category', category_id=category.id) }}" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

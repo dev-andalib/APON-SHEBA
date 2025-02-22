@@ -1,0 +1,34 @@
+{% extends "layout.html" %} 
+{% block content %}
+<div class="content-section">
+  <h2>{{ details.title }}</h2>
+  <p><strong>Price:</strong> ${{ details.ser_price }}</p>
+  <p><strong>Date:</strong> {{ details.date_posted.strftime('%Y-%m-%d') }}</p>
+  <p><strong>Description:</strong> {{ details.description }}</p>
+
+  <form action="{{ url_for('postorder') }}" method="POST" class="form-modern">
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+      <label for="datetime">Date and Time:</label>
+      <input type="datetime-local" id="datetime" name="datetime" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Offer Price:</label>
+      <input type="number" id="price" name="price" step="0.01" class="form-control" required />
+    </div>
+
+    <input type="hidden" name="service_id" value="{{ details.id }}">
+    <input type="hidden" name="service_provider_id" value="{{ details.user_id }}">
+
+    <div class="form-group">
+      <a href="{{ referrer }}" class="btn btn-secondary">Back</a>
+      <button type="submit" class="btn btn-primary">Confirm Order</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}

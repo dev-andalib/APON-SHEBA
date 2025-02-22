@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2>Ongoing Orders</h2>
+    {% if accepted_orders %}
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            {% for order, service, customer in accepted_orders %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="{{ url_for('order_details', order_id=order.id) }}" class="text-dark text-decoration-none">
+                                    {{ service.title }}
+                                </a>
+                            </h3>
+                            <p class="card-text text-muted">{{ service.description }}</p>
+                            <p class="mb-0"><strong>Location:</strong> {{ order.order_loc }}</p>
+                            <p class="mb-0">
+                                <strong>Status:</strong> 
+                                <span class="
+                                    {% if order.status.value == 'completed' %}
+                                        text-success
+                                    {% elif order.status.value == 'on_the_way' %}
+                                        text-primary
+                                    {% elif order.status.value == 'reached' %}
+                                        text-warning
+                                    {% else %}
+                                        text-muted
+                                    {% endif %}
+                                ">
+                                    {{ order.status.value }}
+                                </span>
+                            </p>
+                            {% if order.status.value in ['accepted', 'on_the_way', 'reached'] %}
+                                <!-- Chat Button -->
+                                <a 
+                                    href="{{ url_for('chat') }}" 
+                                    class="btn btn-outline-info mt-3">
+                                    Chat
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No Ongoing orders at the moment.</p>
+    {% endif %}
+
+    <h2>Completed Orders</h2>
+    {% if completed_orders %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for order, service, customer in completed_orders %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <a href="{{ url_for('order_details', order_id=order.id) }}" class="text-dark text-decoration-none">
+                                    {{ service.title }}
+                                </a>
+                            </h3>
+                            <p class="card-text text-muted">{{ service.description }}</p>
+                            <p class="mb-0"><strong>Location:</strong> {{ order.order_loc }}</p>
+                            <p class="mb-0">
+                                <strong>Status:</strong> 
+                                <span class="
+                                    {% if order.status.value == 'completed' %}
+                                        text-success
+                                    {% elif order.status.value == 'on_the_way' %}
+                                        text-primary
+                                    {% elif order.status.value == 'reached' %}
+                                        text-warning
+                                    {% else %}
+                                        text-muted
+                                    {% endif %}
+                                ">
+                                    {{ order.status.value }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No completed orders at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+

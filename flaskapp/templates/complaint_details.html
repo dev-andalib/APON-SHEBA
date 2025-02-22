@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Complaint Details</h1>
+
+<div>
+  <h2>Complaint</h2>
+  <p>{{ complaint.message }}</p>
+  <p><strong>User:</strong> {{ complaint.user.username }}</p>
+  <p><strong>Date:</strong> {{ complaint.date_posted }}</p>
+</div>
+
+<div>
+  <h2>Order Details</h2>
+  <p><strong>Order ID:</strong> {{ order.id }}</p>
+  <p><strong>Service:</strong> {{ order.service.title }}</p>
+  <p><strong>Price:</strong> {{ order.price }}</p>
+  <p><strong>Status:</strong> {{ order.status.value }}</p>
+</div>
+
+{% if complaint.resolved %}
+<div>
+  <h2>Action Taken</h2>
+  <p>{{ complaint.action_taken }}</p>
+</div>
+{% else %}
+<div class="btn-group" role="group" aria-label="Admin actions">
+  <form action="{{ url_for('refund_user', complaint_id=complaint.id) }}" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-danger mr-2">Refund User</button>
+  </form>
+
+  <form action="{{ url_for('remove_service_provider', complaint_id=complaint.id) }}" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-danger mr-2">Remove Service Provider</button>
+  </form>
+
+  <form action="{{ url_for('warn_service_provider', complaint_id=complaint.id) }}" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-warning">Warn Service Provider</button>
+  </form>
+</div>
+{% endif %}
+
+{% endblock content %}

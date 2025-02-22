@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="{{ url_for('become_service_provider') }}">
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Become a Service Provider</legend>
+                
+                <div class="form-group">
+                    <label for="nid" class="form-control-label">NID:</label>
+                    <input type="text" class="form-control form-control-lg" id="nid" name="nid" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio" class="form-control-label">Bio:</label>
+                    <textarea class="form-control form-control-lg" id="bio" name="bio" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="title" class="form-control-label">Service Title:</label>
+                    <input type="text" class="form-control form-control-lg" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-control-label">Service Description:</label>
+                    <textarea class="form-control form-control-lg" id="description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="ser_price" class="form-control-label">Service Price:</label>
+                    <input type="number" class="form-control form-control-lg" id="ser_price" name="ser_price" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration" class="form-control-label">Duration:</label>
+                    <input type="number" class="form-control form-control-lg" id="duration" name="duration" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category" class="form-control-label">Category:</label>
+                    <select class="form-control form-control-lg" id="category" name="category" required>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-info">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

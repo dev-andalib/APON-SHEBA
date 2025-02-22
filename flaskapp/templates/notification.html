@@ -1,0 +1,73 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+<h2>Notification</h2>
+    {% if note %}
+    
+    <h3>Not Viewed: {{note | length}}</h3>
+        {% for note in note %}
+        <div class="content-section">
+        
+            <strong>Title:</strong> {{ note.service_title }} <br>
+            <strong>Price:</strong> {{ note.price }} <br>
+            <strong>Location:</strong> {{ note.loc}} <br>
+            <strong>Date and Time:</strong> {{ note.order_datetime }} <br>
+            <strong>Status:</strong> {{ note.status.value }} <br>
+            <div class="btn-group" role="group" aria-label="Notification actions">
+                <a href="{{ url_for('updateNotification', order_id = note.id) }}" class="btn btn-secondary mr-2">Mark Viewed</a>
+                <form action="{{ url_for('acceptOrder', order_id = note.id) }}" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-success mr-2">Accept</button>
+                </form>
+                <form action="{{ url_for('rejectOrder', order_id = note.id) }}" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </form>
+            </div>
+        
+        </div>
+    {% endfor %}
+    {% else %}
+    <h1> No Unviewed Notification </h1>
+    {% endif %}
+
+    {% if viewed %}
+    
+    <h3>Viewed: {{viewed | length}}</h3>
+        {% for view in viewed %}
+        <div class="content-section">
+        
+            <strong>Title:</strong> {{ view.service_title }} <br>
+            <strong>Price:</strong> {{ view.price }} <br>
+            <strong>Location:</strong> {{ view.loc}} <br>
+            <strong>Date and Time:</strong> {{ view.order_datetime }} <br>
+            <strong>Status:</strong> {{ view.status.value }} <br>
+            <div class="btn-group" role="group" aria-label="Notification actions">
+                <a href="{{ url_for('updateNotification', order_id = view.id) }}" class="btn btn-secondary mr-2">Mark Unviewed</a>
+            </div>
+        
+        </div>
+    {% endfor %}
+    {% else %}
+    <h1> No Viewed Notification </h1>
+    {% endif %}
+
+    {% if refund_notifications and refund_notifications | length > 0 %}
+    <h3>Refund Notifications: {{refund_notifications | length}}</h3>
+        {% for refund in refund_notifications %}
+        <div class="content-section">
+            <strong>Message:</strong> {{ refund.message }} <br>
+            <strong>Date:</strong> {{ refund.date_posted }} <br>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if warning_notifications and warning_notifications | length > 0 %}
+    <h3>Warning Notifications: {{warning_notifications | length}}</h3>
+        {% for warning in warning_notifications %}
+        <div class="content-section">
+            <strong>Message:</strong> {{ warning.message }} <br>
+            <strong>Date:</strong> {{ warning.date_posted }} <br>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+{% endblock content %}

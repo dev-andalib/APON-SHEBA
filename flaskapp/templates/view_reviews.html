@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <h2>Reviews</h2>
+        {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+            <li>
+                <p><strong>Rating:</strong> {{ review.rate }} / 5</p>
+                <p><strong>Review:</strong> {{ review.review }}</p>
+                <p><strong>Customer:</strong> {{ review.customer }}</p>
+            </li>
+            <hr />
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No reviews available for this service.</p>
+        {% endif %}
+        <a href="{{ url_for('servicedetails', service_id=service_id) }}" class="btn btn-secondary">Back</a>
+    </div>
+{% endblock content %}
