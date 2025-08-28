@@ -4,7 +4,7 @@ A full-stack **Flask-based web application** for connecting users who need home 
 
 ---
 
-## 🚀 Project Overview
+# 🚀 Project Overview
 
 This project is an **e-commerce-style marketplace** where:
 
@@ -25,7 +25,7 @@ This project is an **e-commerce-style marketplace** where:
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```bash
 .
@@ -50,7 +50,7 @@ This project is an **e-commerce-style marketplace** where:
 
 
 
-## ✅ Features
+# ✅ Features
 
   🧑‍💼 User Registration & Authentication
 
@@ -66,7 +66,7 @@ This project is an **e-commerce-style marketplace** where:
 
   🌐 Responsive UI with Bootstrap
 
-## 🔧 Getting Started
+# 🔧 Getting Started
   1. Clone the Repository
      git clone https://github.com/your-username/CSE471_Lab_Project.git
      cd CSE471_Lab_Project
@@ -84,7 +84,7 @@ This project is an **e-commerce-style marketplace** where:
 
   The app will be accessible at http://127.0.0.1:5000
 
-## 🧪 Testing the App
+# 🧪 Testing the App
 
 Register as a user and browse available services.
 Apply to become a service provider.
@@ -99,6 +99,6 @@ Payment gateway integration
 Chat system between users and providers
 Role-based dashboard views
 
-## 📄 License
+# 📄 License
 
 This project is part of the CSE471 course and intended for educational purposes.
