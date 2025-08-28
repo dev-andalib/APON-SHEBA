@@ -15,7 +15,7 @@ This project is an **e-commerce-style marketplace** where:
 
 ---
 
-## 🛠️ Built With
+# 🛠️ Built With
 
 - **Python 3.8+**
 - **Flask** (web framework)
